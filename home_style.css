@@ -1,0 +1,169 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 580px;
+
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+
+.logo {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    height:60px;
+    padding-left:15px;
+    padding-right:15px;
+
+    font-family: "Space Grotesk";
+    font-weight: bolder;
+
+    border-radius: 100px;
+    background-color:rgb(112, 112, 228);
+    transition: background-color 0.5s;
+
+    cursor: pointer;
+}
+.logo img {
+    object-fit: contain;
+    border-radius: 7px;
+}
+.logo p {
+    color: whitesmoke;
+    
+    transition: color 0.3s;
+}
+.logo:hover p {
+    color: rgb(94, 61, 155);
+}
+.logo:hover {
+    background-color:rgb(136, 180, 235);
+}
+
+.nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+
+    height:60px;
+
+    border-radius: 100px;
+    background-color:rgb(112, 112, 228);
+}
+.nav-bar a {
+    padding: 14px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    margin-left: 10px;
+    margin-right: 10px;
+
+    cursor: pointer;
+    border-radius: 100px;
+    color: whitesmoke;
+    transition: background-color 0.5s;
+    transition: color 0.3s;
+}
+.nav-bar a:hover {
+    background-color:rgb(136, 180, 235);
+    color: rgb(94, 61, 155);
+}
+
+body {
+    background-color:black;
+    width: 90vw;
+    height: 100vh;
+    margin: 0;
+    margin-left:auto;
+    margin-right:auto;
+    padding: 0;
+}
+* {
+    color:white;
+    font-family: "Sora";
+}
+
+.info-section {
+    display: flex;
+    justify-content: flex-start;
+    gap:10px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#rotator {
+    position: relative;
+    min-width: 180px;
+    font-weight: 600;
+}
+#rotator::after {
+    content: "student";
+    animation: rotate-text 3s steps(1, end) infinite;
+    display: inline-block;
+    background-color: rgb(255, 0, 0);
+    padding: 0 8px;
+    border-radius: 3px;
+}
+@keyframes rotate-text {
+    0% { content: "student"; }
+    33% { content: "doctor"; }
+    66% { content: "startup founder"; }
+    100% { content: "student"; }
+}
+
+
+.slider {
+    margin-top: 60px;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+}
+.overlay {
+    position: absolute;
+    top: 200px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+.overlay h1 {
+    font-family:'Space Grotesk';
+    width:100vw;
+    color:rgb(34, 45, 255);
+    font-size: 100px;
+    margin: 0;
+}
+.overlay p {
+    margin-left: 10px;
+    font-size: 20px;
+}
+.track {
+  display: flex;
+  width: max-content;
+  animation: roll 25s linear;
+}
+.track img {
+  height: 500px;
+  flex-shrink: 0;
+}
+@keyframes scroll-once {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(var(--end));
+  }
+}
+
+
+@media(max-width: 600px) {
+    body {
+        width: 100vw;
+    }
+}
