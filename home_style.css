@@ -9,6 +9,26 @@
     margin-right: auto;
 
 }
+.title-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 1;
+    transition: opacity 0.8s ease-in-out;
+}
+.title {
+    position: relative;
+    justify-self:center;
+    margin-top: 200px;
+}
+.title h1 {
+    margin:0;
+    z-index: 1;
+}
 
 
 .logo {
@@ -73,28 +93,45 @@
     color: rgb(94, 61, 155);
 }
 
-body {
-    background-color:black;
-    width: 90vw;
-    height: 100vh;
-    margin: 0;
-    margin-left:auto;
-    margin-right:auto;
-    padding: 0;
-}
-* {
-    color:white;
-    font-family: "Sora";
+
+.slider {
+    position: relative;
+    overflow: hidden;
 }
 
 .info-section {
     display: flex;
     justify-content: flex-start;
     gap:10px;
-
-    margin-left: auto;
-    margin-right: auto;
+    padding-top: 500px;
+    padding-bottom: 100px;
+    justify-self:center;
 }
+.explore-more {
+    display: block;
+    margin: 100px auto 150px auto;
+    padding: 15px 40px;
+    font-size: 18px;
+    font-family: 'Space Grotesk';
+    background-color: rgb(112, 112, 228);
+    color: whitesmoke;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.explore-more:hover {
+    background-color: rgb(136, 180, 235);
+}
+.explore-more:hover {
+    background-color: rgb(136, 180, 235);
+}
+.info-section #text {
+    align-self:center;
+    margin-bottom: 40px;
+    font-size: 50px;
+}
+
 
 #rotator {
     position: relative;
@@ -118,14 +155,14 @@ body {
 
 
 .slider {
-    margin-top: 60px;
+    margin-top: 600px;
     overflow: hidden;
     width: 100%;
     position: relative;
 }
 .overlay {
     position: absolute;
-    top: 200px;
+    top: 500px;
     left: 0;
     width: 100%;
     height: 100%;
@@ -135,7 +172,7 @@ body {
 .overlay h1 {
     font-family:'Space Grotesk';
     width:100vw;
-    color:rgb(34, 45, 255);
+    /* color:rgb(34, 45, 255); */
     font-size: 100px;
     margin: 0;
 }
@@ -149,8 +186,22 @@ body {
   animation: roll 25s linear;
 }
 .track img {
-  height: 500px;
+  height: 800px;
   flex-shrink: 0;
+}
+
+
+body {
+    background-color:black;
+    height: 100vh;
+    margin: 0;
+    margin-left:auto;
+    margin-right:auto;
+    padding: 0;
+}
+* {
+    color:white;
+    font-family: "Sora";
 }
 @keyframes scroll-once {
   from {
@@ -159,11 +210,4 @@ body {
   to {
     transform: translateX(var(--end));
   }
-}
-
-
-@media(max-width: 600px) {
-    body {
-        width: 100vw;
-    }
 }
