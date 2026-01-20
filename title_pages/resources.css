@@ -1,0 +1,121 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 580px;
+
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title {
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: auto;
+    margin-right: auto;
+
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.title * {
+    margin: 0;
+}
+
+
+.content {
+    max-width: 1200px;
+    display: flex;
+    flex-wrap:wrap;
+    gap: 40px;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.passage {
+    font-size: 20px;
+    max-width: 600px;
+}
+
+
+.logo {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    height:60px;
+    padding-left:15px;
+    padding-right:15px;
+
+    font-family: "Space Grotesk";
+    font-weight: bolder;
+
+    border-radius: 100px;
+    background-color:rgb(112, 112, 228);
+    transition: background-color 0.5s;
+
+    cursor: pointer;
+    text-decoration: none;
+}
+.logo img {
+    object-fit: contain;
+    border-radius: 7px;
+}
+.logo p {
+    color: whitesmoke;
+    
+    transition: color 0.3s;
+}
+.logo:hover p {
+    color: rgb(94, 61, 155);
+}
+.logo:hover {
+    background-color:rgb(136, 180, 235);
+}
+
+.nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+
+    height:60px;
+
+    border-radius: 100px;
+    background-color:rgb(112, 112, 228);
+}
+.nav-bar a {
+    padding: 14px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    margin-left: 10px;
+    margin-right: 10px;
+
+    cursor: pointer;
+    border-radius: 100px;
+    color: whitesmoke;
+    transition: background-color 0.5s;
+    transition: color 0.3s;
+    text-decoration: none;
+}
+.nav-bar a:hover {
+    background-color:rgb(136, 180, 235);
+    color: rgb(94, 61, 155);
+}
+
+
+
+body {
+    background-color:black;
+    height: 100vh;
+    margin: 0;
+    margin-left:auto;
+    margin-right:auto;
+    padding: 0;
+}
+* {
+    color:white;
+    font-family: "Sora";
+}

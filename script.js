@@ -81,3 +81,43 @@ if (exploreButton) {
     });
   });
 }
+
+let lastScrollTop = 0;
+let isHidden = false;
+const container = document.querySelector('.container');
+const logoBtn = document.getElementById('logo-btn');
+const exploreMoreBtn = document.querySelector('.explore-more');
+
+// Scroll detection
+window.addEventListener('scroll', () => {
+    let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // Only trigger hide/show after scrolling past 800px
+    if (currentScroll > 800) {
+        if (currentScroll > lastScrollTop && !isHidden) {
+            // Scrolling DOWN
+            container.classList.remove('visible');
+            container.classList.add('hidden');
+            isHidden = true;
+        } else if (currentScroll < lastScrollTop && isHidden) {
+            // Scrolling UP
+            container.classList.remove('hidden');
+            container.classList.add('visible');
+            isHidden = false;
+        }
+    } else {
+        // Always visible when near top
+        if (isHidden) {
+            container.classList.remove('hidden');
+            container.classList.add('visible');
+            isHidden = false;
+        }
+    }
+    
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+});
+
+// Logo button click handler
+logoBtn.addEventListener('click', () => {
+    exploreMoreBtn.scrollIntoView({ behavior: 'smooth' });
+});
