@@ -126,7 +126,7 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 40px;
-    margin-bottom: 40px;
+    /* margin-bottom: 40px; */
 
     position: absolute;
     top: 70%;
@@ -143,7 +143,17 @@
     margin: 0;
 }
 
+.slogan-top {
+    display: block;
+    font-size: 55px;
 
+    margin:0;
+
+    font-weight:lighter;
+    text-align: right;
+
+    background-color: rgb(0, 89, 255);
+}
 
 
 .content {
@@ -155,11 +165,25 @@
     margin-left: auto;
     margin-right: auto;
 }
-
-/* .passage {
+.passage {
     font-size: 20px;
-    max-width: 600px;
-} */
+    max-width: 60%;
+}
+.passage-singlecolumn {
+    font-size: 20px;
+    max-width: 100%;
+}
+#developing-goals {
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 30px;
+    background-color:rgb(226, 61, 32);
+}
+
+.content img {
+    border-radius: 20px;
+    object-fit: cover;
+}
 
 #point {
     font-size: 35px;
@@ -169,22 +193,14 @@
     margin-right: auto;
 }
 
-#tesla {
-    font-size: 70px;
 
-    text-align: right;
-    margin-left: auto;
-    margin-right: auto;
-
-    background-color: rgb(0, 89, 255);
-}
 
 .quote-section {
     position: relative;
 }
 .quote1 {
     position:absolute;
-    bottom: 80px;
+    bottom: 90px;
     font-size: 55px;
     font-style: italic;
 
@@ -196,7 +212,7 @@
 .quote2 {
     position:absolute;
     bottom: 10px;
-    top: 70px;
+    top: 90px;
     left: 1170px;
     font-size: 55px;
     font-style: italic;

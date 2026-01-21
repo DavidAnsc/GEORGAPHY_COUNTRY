@@ -23,7 +23,7 @@ if (slider && track) {
 // Scroll deadzone - require a deliberate scroll to pass the destiny section
 let lastScrollY = 0;
 const scrollThreshold = 400; // Minimum scroll distance required to move past
-const destinyPosition = 1300; // Destiny section position
+const destinyPosition = 1450; // Destiny section position
 const deadzoneStart = destinyPosition - 20; // Where the deadzone begins
 let accumulatedScroll = 0;
 let deadzoneReleased = false;
