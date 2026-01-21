@@ -29,47 +29,6 @@ let accumulatedScroll = 0;
 let deadzoneReleased = false;
 let ignoreDeadzone = false; // used when programmatic scroll (e.g., Explore More)
 
-window.addEventListener('scroll', () => {
-  const scrollPosition = window.scrollY;
-  const scrollDelta = scrollPosition - lastScrollY;
-  const scrollingDown = scrollDelta > 0;
-  const overlayPosition = 500; // Position where overlay/Your Life's Destiny starts
-
-  const inDeadzone = scrollPosition >= deadzoneStart && scrollPosition < destinyPosition;
-
-  if (!ignoreDeadzone && scrollingDown && inDeadzone && !deadzoneReleased) {
-    accumulatedScroll += Math.abs(scrollDelta);
-
-    if (accumulatedScroll < scrollThreshold) {
-      // Not enough intent yet; hold at the start of the deadzone
-      window.scrollTo(0, deadzoneStart);
-    } else {
-      // User scrolled enough; release the lock until they scroll back above the start
-      deadzoneReleased = true;
-      accumulatedScroll = 0;
-    }
-  }
-
-  if (!inDeadzone) {
-    // Reset when outside deadzone so re-entering requires intent again
-    deadzoneReleased = false;
-    accumulatedScroll = 0;
-  }
-
-  // If we were ignoring deadzone (programmatic scroll), stop ignoring once above start
-  if (ignoreDeadzone && scrollPosition <= deadzoneStart) {
-    ignoreDeadzone = false;
-  }
-
-  lastScrollY = scrollPosition;
-
-  // Hide video when scrolled down to overlay section
-  if (scrollPosition > overlayPosition) {
-    titleVideo.style.opacity = '0';
-  } else {
-    titleVideo.style.opacity = '1';
-  }
-});
 
 // Scroll to top when Explore More button is clicked
 const exploreButton = document.querySelector('.explore-more');
@@ -90,7 +49,7 @@ const container = document.querySelector('.container');
 const logoBtn = document.getElementById('logo-btn');
 const exploreMoreBtn = document.querySelector('.explore-more');
 
-// Scroll detection
+// Scroll detection FOR NAVBAR HIDE/SHOW
 window.addEventListener('scroll', () => {
     let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
     
@@ -130,7 +89,11 @@ if (logoBtn) {
   });
 }
 
-// MARK: REAL PERSON COMMANDS 😅
+
+
+
+
+// MARK: REAL HUMAN COMMANDS 😅
 
 var sustainabilityButton = document.getElementById("sustainabilityButton");
 
