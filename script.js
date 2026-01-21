@@ -20,7 +20,6 @@ if (slider && track) {
   observer.observe(slider);
 }
 
-// Scroll deadzone - require a deliberate scroll to pass the destiny section
 let lastScrollY = 0;
 const scrollThreshold = 400; // Minimum scroll distance required to move past
 const destinyPosition = 1450; // Destiny section position
@@ -94,9 +93,50 @@ if (logoBtn) {
 
 
 // MARK: REAL HUMAN COMMANDS 😅
-
+var industryButton = document.getElementById("industryButton");
+var exploreTechButton = document.getElementById("button1");
+var investButton = document.getElementById("button2");
 var sustainabilityButton = document.getElementById("sustainabilityButton");
 
 sustainabilityButton.onclick = function() {
-    window.location.href = "title_pages/resources.html";
+  window.location.href = "title_pages/resources.html";
+}
+sustainabilityButton.onmouseover = function() {
+  sustainabilityButton.style.backgroundColor = "rgb(23, 196, 58)";
+}
+sustainabilityButton.onmouseout = function() {
+  sustainabilityButton.style.backgroundColor = "rgb(56, 168, 34)";
+}
+
+
+industryButton.onclick = function() {
+  window.location.href = "title_pages/industries.html";
+}
+industryButton.onmouseover = function() {
+  industryButton.style.backgroundColor = "rgb(41, 216, 207)";
+}
+industryButton.onmouseout = function() {
+  industryButton.style.backgroundColor = "rgb(42, 186, 188)";
+}
+
+
+investButton.onclick = function() {
+  window.location.href = "subpages/nothing.html";
+}
+investButton.onmouseover = function() {
+  investButton.style.backgroundColor = "rgb(222, 231, 42)";
+}
+investButton.onmouseout = function() {
+  investButton.style.backgroundColor = "rgb(140, 186, 0)";
+}
+
+
+exploreTechButton.onclick = function() {
+  window.location.href = "title_pages/industries.html";
+}
+exploreTechButton.onmouseover = function() {
+  exploreTechButton.style.backgroundColor = "rgb(224, 85, 255)";
+}
+exploreTechButton.onmouseout = function() {
+  exploreTechButton.style.backgroundColor = "rgb(149, 61, 231)";
 }
