@@ -56,15 +56,21 @@
 }
 
 .title {
-    position: relative;
-    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align:start;
+    align-self: center;
     margin-top: 200px;
+
 }
 
 .title h1 {
+    max-width: 700px;
     margin: 0;
-    z-index: 1;
 }
+
 
 .logo {
     display: flex;
@@ -150,15 +156,12 @@
 
 .overlay h1 {
     font-family: 'Space Grotesk';
+    background-color: rgb(40, 87, 255);
     width: 100vw;
     font-size: 100px;
     margin: 0;
 }
 
-.overlay p {
-    margin-left: 10px;
-    font-size: 20px;
-}
 
 .track {
     display: flex;
@@ -169,6 +172,7 @@
 .track img {
     height: 800px;
     flex-shrink: 0;
+    filter: grayscale(100%);
 }
 
 .info-section {
@@ -186,50 +190,31 @@
     font-size: 50px;
 }
 
-#rotator {
-    position: relative;
-    min-width: 180px;
-    font-weight: 600;
-}
-
-#rotator::after {
-    content: "student";
-    animation: rotate-text 3s steps(1, end) infinite;
-    display: inline-block;
-    background-color: rgb(255, 0, 0);
-    padding: 0 8px;
-    border-radius: 3px;
-}
-
-@keyframes rotate-text {
-    0% { content: "student"; }
-    33% { content: "doctor"; }
-    66% { content: "startup founder"; }
-    100% { content: "student"; }
-}
-
 .explore-more {
     display: block;
-    margin: 100px auto 150px auto;
-    padding: 15px 40px;
-    font-size: 18px;
+    background-color: rgb(234, 68, 96);
+
+    margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    padding: 55px 40px;
+    font-size: 80px;
+    font-weight: bolder;
     font-family: 'Space Grotesk';
-    background-color: rgb(112, 112, 228);
+    
     color: whitesmoke;
     border: none;
-    border-radius: 100px;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
-.explore-more:hover {
-    background-color: rgb(136, 180, 235);
-}
+
 .head1 {
     display: flex;
     align-items: center;
     gap: 40px;
-    margin-top: 200px;
+    margin-top: 70px;
 
     margin-left: 20px;
     margin-right: 20px;
@@ -311,8 +296,13 @@
     gap: 40px;
     margin-top: 300px;
 
-    margin-left: 20px;
-    margin-right: 20px;
+    padding-top:30px;
+    padding-bottom: 30px;
+
+    padding-left: 20px;
+    padding-right: 20px;
+
+    background-color: rgb(0, 87, 180);
 }
 .head4 .text {
     font-family: "Space Grotesk";
@@ -374,6 +364,27 @@
 
 #quote1 {
     margin-top: 100px;
+}
+
+#quote2 {
+    margin-top: 300px;
+}
+
+#quote2::after {
+    content: '"';
+    position: absolute;
+    bottom: 120px;
+    font-family: sans-serif;
+    font-size: 80px;
+}
+
+#quote2::before {
+    content: '"';
+    position: absolute;
+    left: 980px;
+    top: 80px;
+    font-family: sans-serif;
+    font-size: 80px;
 }
 
 

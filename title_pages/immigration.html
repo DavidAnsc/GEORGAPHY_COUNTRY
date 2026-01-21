@@ -22,5 +22,34 @@
             <p>Discover the pathways to becoming a part of Framstad's thriving community.</p>
         </div>
 
+        <script>
+            let lastScrollTop = 0;
+            let isHidden = false;
+            const container = document.querySelector('.container');
+
+            window.addEventListener('scroll', () => {
+                let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (currentScroll > 300) {
+                    if (currentScroll > lastScrollTop && !isHidden) {
+                        container.classList.remove('visible');
+                        container.classList.add('hidden');
+                        isHidden = true;
+                    } else if (currentScroll < lastScrollTop && isHidden) {
+                        container.classList.remove('hidden');
+                        container.classList.add('visible');
+                        isHidden = false;
+                    }
+                } else {
+                    if (isHidden) {
+                        container.classList.remove('hidden');
+                        container.classList.add('visible');
+                        isHidden = false;
+                    }
+                }
+                
+                lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+            });
+        </script>
     </body>
 </html>

@@ -1,12 +1,46 @@
 .container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    max-width: 580px;
+    justify-content: center;
+    gap: 30px;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    opacity: 1;
+}
 
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
+.container.hidden {
+    animation: slideUp 0.4s ease-in-out forwards;
+    pointer-events: none;
+}
+
+.container.visible {
+    animation: slideDown 0.4s ease-in-out forwards;
+    pointer-events: auto;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translate(-50%, -150%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+    to {
+        transform: translate(-50%, -150%);
+        opacity: 0;
+    }
 }
 
 .title {
@@ -23,15 +57,15 @@
     display: flex;
     gap: 6px;
     align-items: center;
-    height:60px;
-    padding-left:15px;
-    padding-right:15px;
+    height: 60px;
+    padding-left: 15px;
+    padding-right: 15px;
 
     font-family: "Space Grotesk";
     font-weight: bolder;
 
     border-radius: 100px;
-    background-color:rgb(112, 112, 228);
+    background-color: rgb(112, 112, 228);
     transition: background-color 0.5s;
 
     cursor: pointer;
@@ -50,18 +84,18 @@
     color: rgb(94, 61, 155);
 }
 .logo:hover {
-    background-color:rgb(136, 180, 235);
+    background-color: rgb(136, 180, 235);
 }
 
 .nav-bar {
     display: flex;
     align-items: center;
-    justify-content:space-between;
+    justify-content: space-between;
 
-    height:60px;
+    height: 60px;
 
     border-radius: 100px;
-    background-color:rgb(112, 112, 228);
+    background-color: rgb(112, 112, 228);
 }
 .nav-bar a {
     padding: 14px;
@@ -79,21 +113,21 @@
     text-decoration: none;
 }
 .nav-bar a:hover {
-    background-color:rgb(136, 180, 235);
+    background-color: rgb(136, 180, 235);
     color: rgb(94, 61, 155);
 }
 
 
 
 body {
-    background-color:black;
+    background-color: black;
     height: 100vh;
     margin: 0;
-    margin-left:auto;
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
     padding: 0;
 }
 * {
-    color:white;
+    color: white;
     font-family: "Sora";
 }

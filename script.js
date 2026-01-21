@@ -1,3 +1,5 @@
+
+// MARK: AI PROMPTS
 const slider = document.querySelector('.slider');
 const track = document.querySelector('.track');
 const titleVideo = document.querySelector('.title-video');
@@ -21,8 +23,8 @@ if (slider && track) {
 // Scroll deadzone - require a deliberate scroll to pass the destiny section
 let lastScrollY = 0;
 const scrollThreshold = 400; // Minimum scroll distance required to move past
-const destinyPosition = 1200; // Destiny section position
-const deadzoneStart = destinyPosition - 80; // Where the deadzone begins
+const destinyPosition = 1300; // Destiny section position
+const deadzoneStart = destinyPosition - 20; // Where the deadzone begins
 let accumulatedScroll = 0;
 let deadzoneReleased = false;
 let ignoreDeadzone = false; // used when programmatic scroll (e.g., Explore More)
@@ -93,7 +95,7 @@ window.addEventListener('scroll', () => {
     let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
     
     // Only trigger hide/show after scrolling past 800px
-    if (currentScroll > 800) {
+    if (currentScroll > 500) {
         if (currentScroll > lastScrollTop && !isHidden) {
             // Scrolling DOWN
             container.classList.remove('visible');
@@ -118,6 +120,20 @@ window.addEventListener('scroll', () => {
 });
 
 // Logo button click handler
-logoBtn.addEventListener('click', () => {
-    exploreMoreBtn.scrollIntoView({ behavior: 'smooth' });
-});
+window.scrollTo({ top: 0, behavior: 'smooth' });
+if (logoBtn) {
+  logoBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+
+// MARK: REAL PERSON COMMANDS 😅
+
+var sustainabilityButton = document.getElementById("sustainabilityButton");
+
+sustainabilityButton.onclick = function() {
+    window.location.href = "title_pages/resources.html";
+}

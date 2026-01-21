@@ -16,10 +16,88 @@
                 <a href="resources.html">resources</a>
             </div>
         </div>
-
-        <div class="title">
-            <h1 style="font-size:80px; font-family:'Space Grotesk'">Industries</h1>
-            <p>Get insights into Framstad's diverse economic sectors and opportunities.</p>
+        <div class="main-content">
+            <img id="bg" src="../resources/mc_images/z6.png" width="100%">
+            <div class="title">
+                <h1 >Industries</h1>
+                <p>Experience the diverse sectors that drive Framstad's economy.</p>
+            </div>
         </div>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div class="content">
+            <div class="passage">
+                <p>•<b>  Tech and start-ups:</b> because of the tech-friendly government policies, the country attracts a large amount of investors in the tech industry. Which helps start-ups to survive, and innovation becomes a culture of Framstad.
+                </p>
+                <p>•<b>  Education-related:</b> due to the great number of tech companies, the education industry is also improved in Framstad by using new technologies, better education structures.
+                </p>
+                <p>•<b>  Large Servers:</b> Due to its advance in technologies and its physical location, the largest servers from the top companies in the world are located in Framstad. Building servers in cold places can reduce the cost for “cooling” to half.
+                </p>
+                <p>•<b>  Food process:</b> Because of the lack of original food, low variety of food, and its high population. Framstad relies on imported food heavily, causing food processing (transportation, processing, selling) works to rise to one of the BIGGEST industries in Framstad. 
+                </p>
+                <p>•<b>  Transportation:</b> People living in Framstad often travel to the U.K., Norway and Sweden, plus its large population base. Makes the transportation industry important for Framstad!
+                </p>
+                </p>
+
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+
+                <div class="quote-section">
+                    <h1 class="quote1">"</h1>
+                    <h2 id="point" style="font-family:'Space Grotesk'">In Framstad, driving only, no buses, trains… due to inconvenience of the terrain of the country. About 99% of the people in Vikstad have at least 1 car!</h2>
+                    <h1 class="quote2">"</h1>
+                </div>
+
+                <h1 id="tesla">Get a Tesla at USD$20,000</h1>
+            </div>
+        </div>
+
+
+
+
+
+        <script>
+            let lastScrollTop = 0;
+            let isHidden = false;
+            const container = document.querySelector('.container');
+
+            window.addEventListener('scroll', () => {
+                let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (currentScroll > 300) {
+                    if (currentScroll > lastScrollTop && !isHidden) {
+                        container.classList.remove('visible');
+                        container.classList.add('hidden');
+                        isHidden = true;
+                    } else if (currentScroll < lastScrollTop && isHidden) {
+                        container.classList.remove('hidden');
+                        container.classList.add('visible');
+                        isHidden = false;
+                    }
+                } else {
+                    if (isHidden) {
+                        container.classList.remove('hidden');
+                        container.classList.add('visible');
+                        isHidden = false;
+                    }
+                }
+                
+                lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+            });
+        </script>
     </body>
 </html>
