@@ -48,6 +48,22 @@ const container = document.querySelector('.container');
 const logoBtn = document.getElementById('logo-btn');
 const exploreMoreBtn = document.querySelector('.explore-more');
 
+// Background toggle based on destiny section position
+const destinySection = document.querySelector('.slider');
+
+window.addEventListener('scroll', () => {
+    // Toggle background based on destiny section position
+    if (destinySection) {
+        const destinyTop = destinySection.getBoundingClientRect().top;
+        
+        if (destinyTop > 0) {
+            document.body.classList.add('above-destiny');
+        } else {
+            document.body.classList.remove('above-destiny');
+        }
+    }
+});
+
 // Scroll detection FOR NAVBAR HIDE/SHOW
 window.addEventListener('scroll', () => {
     let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
