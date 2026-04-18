@@ -157,33 +157,14 @@ exploreTechButton.onmouseout = function() {
   exploreTechButton.style.backgroundColor = "rgb(149, 61, 231)";
 }
 
-// Layered reveal trail for top section of homepage
+// Pointer character trail for top section of homepage
+const trailChars = ['>', '_', '=', '<'];
 const trailLayer = document.createElement('div');
 trailLayer.className = 'pointer-trail-layer';
-const trailGrid = document.createElement('pre');
-trailGrid.className = 'pointer-trail-grid';
-trailLayer.appendChild(trailGrid);
 document.body.appendChild(trailLayer);
 
-const trailSymbols = ['>', '_', '=', '<'];
-const trailStepX = 36;
-const trailStepY = 34;
-
-function buildTrailGrid() {
-  const cols = Math.ceil(window.innerWidth / trailStepX) + 6;
-  const rows = Math.ceil(window.innerHeight / trailStepY) + 4;
-  const lines = [];
-
-  for (let row = 0; row < rows; row += 1) {
-    let line = '';
-    for (let col = 0; col < cols; col += 1) {
-      line += `${trailSymbols[(col + row) % trailSymbols.length]} `;
-    }
-    lines.push(line);
-  }
-
-  trailGrid.textContent = lines.join('\n');
-}
+let lastTrailTime = 0;
+const trailIntervalMs = 26;
 
 function isInHomeTopSection(clientY) {
   if (!slider) return false;
@@ -192,19 +173,24 @@ function isInHomeTopSection(clientY) {
 }
 
 window.addEventListener('pointermove', (event) => {
-  if (!isInHomeTopSection(event.clientY)) {
-    trailLayer.classList.remove('active');
-    return;
-  }
+  const now = performance.now();
+  if (now - lastTrailTime < trailIntervalMs) return;
+  if (!isInHomeTopSection(event.clientY)) return;
 
-  trailLayer.classList.add('active');
-  trailLayer.style.setProperty('--trail-x', `${event.clientX}px`);
-  trailLayer.style.setProperty('--trail-y', `${event.clientY}px`);
+  lastTrailTime = now;
+
+  const particle = document.createElement('span');
+  particle.className = 'trail-particle';
+  particle.textContent = trailChars[Math.floor(Math.random() * trailChars.length)];
+
+  const jitterX = (Math.random() - 0.5) * 10;
+  const jitterY = (Math.random() - 0.5) * 10;
+  particle.style.left = `${event.clientX + jitterX}px`;
+  particle.style.top = `${event.clientY + jitterY}px`;
+
+  trailLayer.appendChild(particle);
+
+  setTimeout(() => {
+    particle.remove();
+  }, 750);
 });
-
-window.addEventListener('pointerleave', () => {
-  trailLayer.classList.remove('active');
-});
-
-window.addEventListener('resize', buildTrailGrid);
-buildTrailGrid();
