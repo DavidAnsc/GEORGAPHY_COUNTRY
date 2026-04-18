@@ -156,3 +156,41 @@ exploreTechButton.onmouseover = function() {
 exploreTechButton.onmouseout = function() {
   exploreTechButton.style.backgroundColor = "rgb(149, 61, 231)";
 }
+
+// Pointer character trail for top section of homepage
+const trailChars = ['>', '_', '=', '<'];
+const trailLayer = document.createElement('div');
+trailLayer.className = 'pointer-trail-layer';
+document.body.appendChild(trailLayer);
+
+let lastTrailTime = 0;
+const trailIntervalMs = 26;
+
+function isInHomeTopSection(clientY) {
+  if (!slider) return false;
+  const sliderTop = slider.getBoundingClientRect().top;
+  return clientY < sliderTop;
+}
+
+window.addEventListener('pointermove', (event) => {
+  const now = performance.now();
+  if (now - lastTrailTime < trailIntervalMs) return;
+  if (!isInHomeTopSection(event.clientY)) return;
+
+  lastTrailTime = now;
+
+  const particle = document.createElement('span');
+  particle.className = 'trail-particle';
+  particle.textContent = trailChars[Math.floor(Math.random() * trailChars.length)];
+
+  const jitterX = (Math.random() - 0.5) * 10;
+  const jitterY = (Math.random() - 0.5) * 10;
+  particle.style.left = `${event.clientX + jitterX}px`;
+  particle.style.top = `${event.clientY + jitterY}px`;
+
+  trailLayer.appendChild(particle);
+
+  setTimeout(() => {
+    particle.remove();
+  }, 750);
+});
