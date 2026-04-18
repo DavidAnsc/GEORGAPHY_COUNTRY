@@ -375,3 +375,35 @@ body {
         transform: translateX(var(--end));
     }
 }
+
+
+.pointer-trail-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 20;
+    overflow: hidden;
+}
+
+.trail-particle {
+    position: fixed;
+    font-family: "Space Grotesk", monospace;
+    font-weight: 700;
+    font-size: 20px;
+    color: rgba(240, 248, 255, 0.9);
+    text-shadow: 0 0 10px rgba(65, 105, 225, 0.45);
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    animation: trailFade 700ms ease-out forwards;
+}
+
+@keyframes trailFade {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -58%) scale(0.75) rotate(8deg);
+    }
+}
