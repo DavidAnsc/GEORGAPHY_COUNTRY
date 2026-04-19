@@ -158,18 +158,45 @@ exploreTechButton.onmouseout = function() {
 }
 
 // Pointer character trail for top section of homepage
-const trailChars = ['>', '_', '<'];
 const trailLayer = document.createElement('div');
 trailLayer.className = 'pointer-trail-layer';
 document.body.appendChild(trailLayer);
 
 let lastTrailTime = 0;
-const trailIntervalMs = 18;
-const trailWidth = 24;
-const minParticleDistance = 18;
+const trailIntervalMs = 128;
+const minParticleDistance = 14;
 const activeParticleAnchors = [];
 let lastPointerX = null;
 let lastPointerY = null;
+function centeredRow(content, width = 7) {
+  const totalPadding = Math.max(width - content.length, 0);
+  const leftPadding = Math.floor(totalPadding / 2);
+  const rightPadding = totalPadding - leftPadding;
+  return `${' '.repeat(leftPadding)}${content}${' '.repeat(rightPadding)}`;
+}
+
+function createDropletRows() {
+  const innerHead = '●';
+  const innerBodySize = Math.random() > 0.5 ? 3 : 2;
+  const innerBody = '●'.repeat(innerBodySize);
+  const sideLeft = Math.random() > 0.5 ? '<' : '|';
+  const sideRight = sideLeft === '<' ? '>' : '|';
+  const tailChar = Math.random() > 0.5 ? '|' : ':';
+  const tailLength = Math.random() > 0.6 ? 3 : 2;
+
+  const rows = [
+    centeredRow('_'),
+    centeredRow(`<${innerHead}>`),
+    centeredRow(`${sideLeft}${innerBody}${sideRight}`),
+    centeredRow(`|●|`)
+  ];
+
+  for (let i = 0; i < tailLength; i += 1) {
+    rows.push(centeredRow(tailChar));
+  }
+
+  return rows;
+}
 
 function isInHomeTopSection(clientY) {
   if (!slider) return false;
@@ -197,9 +224,15 @@ function canPlaceParticle(x, y) {
 function spawnParticle(x, y, now) {
   if (!canPlaceParticle(x, y)) return;
 
-  const particle = document.createElement('span');
+  const particle = document.createElement('div');
   particle.className = 'trail-particle';
-  particle.textContent = trailChars[Math.floor(Math.random() * trailChars.length)];
+  const dropletRows = createDropletRows();
+  dropletRows.forEach((row) => {
+    const rowNode = document.createElement('span');
+    rowNode.className = 'trail-particle-row';
+    rowNode.textContent = row;
+    particle.appendChild(rowNode);
+  });
   particle.style.left = `${x}px`;
   particle.style.top = `${y}px`;
   trailLayer.appendChild(particle);
@@ -228,16 +261,12 @@ window.addEventListener('pointermove', (event) => {
   const dx = event.clientX - lastPointerX;
   const dy = event.clientY - lastPointerY;
   const magnitude = Math.hypot(dx, dy) || 1;
-  const normalX = -dy / magnitude;
-  const normalY = dx / magnitude;
-
-  const offsets = [-trailWidth / 2, 0, trailWidth / 2];
-  offsets.forEach((offset) => {
-    const jitter = (Math.random() - 0.5) * 4;
-    const spawnX = event.clientX + (normalX * offset) + jitter;
-    const spawnY = event.clientY + (normalY * offset) + jitter;
-    spawnParticle(spawnX, spawnY, now);
-  });
+  const unitX = dx / magnitude;
+  const unitY = dy / magnitude;
+  const cursorBodyOffset = -3;
+  const spawnX = event.clientX + (unitX * cursorBodyOffset);
+  const spawnY = event.clientY + (unitY * cursorBodyOffset);
+  spawnParticle(spawnX, spawnY, now);
 
   lastPointerX = event.clientX;
   lastPointerY = event.clientY;

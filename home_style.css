@@ -389,27 +389,36 @@ body {
 
 .trail-particle {
     position: fixed;
-    font-family: "Space Grotesk", monospace;
+    font-family: "Courier New", monospace;
     font-weight: 700;
-    font-size: 24px;
+    font-size: 9px;
     line-height: 1;
-    color: rgba(240, 248, 255, 0.9);
-    text-shadow: 0 0 12px rgba(65, 105, 225, 0.5);
+    letter-spacing: 0;
+    white-space: normal;
+    margin: 0;
+    color: rgba(240, 248, 255, 0.95);
+    text-shadow: none;
     transform: translate(-50%, -50%) scale(1);
+    transform-origin: 50% 50%;
     opacity: 1;
-    animation: trailFade 1200ms ease-out forwards;
+    animation: trailFade 700ms linear forwards;
+}
+
+.trail-particle-row {
+    display: block;
+    white-space: pre;
 }
 
 @keyframes trailFade {
     0% {
         opacity: 1;
-        transform: translate(-50%, -50%) scaleX(1) scaleY(1);
+        transform: translate(-50%, -50%) scale(1);
     }
     100% {
         opacity: 0;
         transform: translate(
             calc(-50% + var(--drift-x, 0px)),
             calc(-50% + var(--drift-y, 0px))
-        ) scaleX(0.2) scaleY(0.45);
+        ) scale(0.7);
     }
 }
