@@ -158,7 +158,7 @@ exploreTechButton.onmouseout = function() {
 }
 
 // Pointer character trail for top section of homepage
-const trailChars = ['>', '_', '=', '<'];
+const trailChars = ['>', '_', '<'];
 const trailLayer = document.createElement('div');
 trailLayer.className = 'pointer-trail-layer';
 document.body.appendChild(trailLayer);
