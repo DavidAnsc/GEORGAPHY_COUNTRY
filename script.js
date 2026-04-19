@@ -163,40 +163,19 @@ trailLayer.className = 'pointer-trail-layer';
 document.body.appendChild(trailLayer);
 
 let lastTrailTime = 0;
-const trailIntervalMs = 128;
+const trailIntervalMs = 28;
 const minParticleDistance = 14;
 const activeParticleAnchors = [];
 let lastPointerX = null;
 let lastPointerY = null;
-function centeredRow(content, width = 7) {
-  const totalPadding = Math.max(width - content.length, 0);
-  const leftPadding = Math.floor(totalPadding / 2);
-  const rightPadding = totalPadding - leftPadding;
-  return `${' '.repeat(leftPadding)}${content}${' '.repeat(rightPadding)}`;
-}
-
-function createDropletRows() {
-  const innerHead = '●';
-  const innerBodySize = Math.random() > 0.5 ? 3 : 2;
-  const innerBody = '●'.repeat(innerBodySize);
-  const sideLeft = Math.random() > 0.5 ? '<' : '|';
-  const sideRight = sideLeft === '<' ? '>' : '|';
-  const tailChar = Math.random() > 0.5 ? '|' : ':';
-  const tailLength = Math.random() > 0.6 ? 3 : 2;
-
-  const rows = [
-    centeredRow('_'),
-    centeredRow(`<${innerHead}>`),
-    centeredRow(`${sideLeft}${innerBody}${sideRight}`),
-    centeredRow(`|●|`)
-  ];
-
-  for (let i = 0; i < tailLength; i += 1) {
-    rows.push(centeredRow(tailChar));
-  }
-
-  return rows;
-}
+const dropletRows = [
+  '   _   ',
+  '  <●>  ',
+  ' <●●●> ',
+  '  |●|  ',
+  '   |   ',
+  '   |   '
+];
 
 function isInHomeTopSection(clientY) {
   if (!slider) return false;
@@ -221,20 +200,15 @@ function canPlaceParticle(x, y) {
   });
 }
 
-function spawnParticle(x, y, now) {
+function spawnParticle(x, y, now, angleDeg = 0) {
   if (!canPlaceParticle(x, y)) return;
 
-  const particle = document.createElement('div');
+  const particle = document.createElement('pre');
   particle.className = 'trail-particle';
-  const dropletRows = createDropletRows();
-  dropletRows.forEach((row) => {
-    const rowNode = document.createElement('span');
-    rowNode.className = 'trail-particle-row';
-    rowNode.textContent = row;
-    particle.appendChild(rowNode);
-  });
+  particle.textContent = dropletRows.join('\n');
   particle.style.left = `${x}px`;
   particle.style.top = `${y}px`;
+  particle.style.setProperty('--trail-angle', `${angleDeg}deg`);
   trailLayer.appendChild(particle);
 
   activeParticleAnchors.push({ x, y, time: now });
@@ -254,7 +228,7 @@ window.addEventListener('pointermove', (event) => {
   if (lastPointerX === null || lastPointerY === null) {
     lastPointerX = event.clientX;
     lastPointerY = event.clientY;
-    spawnParticle(event.clientX, event.clientY, now);
+    spawnParticle(event.clientX, event.clientY, now, 0);
     return;
   }
 
@@ -266,7 +240,8 @@ window.addEventListener('pointermove', (event) => {
   const cursorBodyOffset = -3;
   const spawnX = event.clientX + (unitX * cursorBodyOffset);
   const spawnY = event.clientY + (unitY * cursorBodyOffset);
-  spawnParticle(spawnX, spawnY, now);
+  const angleDeg = (Math.atan2(dy, dx) * 180 / Math.PI) + 90;
+  spawnParticle(spawnX, spawnY, now, angleDeg);
 
   lastPointerX = event.clientX;
   lastPointerY = event.clientY;
