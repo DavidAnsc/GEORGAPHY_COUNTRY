@@ -164,10 +164,9 @@ trailLayer.className = 'pointer-trail-layer';
 document.body.appendChild(trailLayer);
 
 let lastTrailTime = 0;
-const trailIntervalMs = 70;
-const trailWidth = 40;
-const minParticleDistance = 12;
-const textGrid = 8;
+const trailIntervalMs = 18;
+const trailWidth = 24;
+const minParticleDistance = 18;
 const activeParticleAnchors = [];
 let lastPointerX = null;
 let lastPointerY = null;
@@ -180,7 +179,7 @@ function isInHomeTopSection(clientY) {
 
 function removeExpiredAnchors(now) {
   for (let i = activeParticleAnchors.length - 1; i >= 0; i -= 1) {
-    if (now - activeParticleAnchors[i].time > 360) {
+    if (now - activeParticleAnchors[i].time > 260) {
       activeParticleAnchors.splice(i, 1);
     }
   }
@@ -195,29 +194,20 @@ function canPlaceParticle(x, y) {
   });
 }
 
-function snapToTextGrid(value) {
-  return Math.round(value / textGrid) * textGrid;
-}
-
-function spawnParticle(x, y, now, driftX = 0, driftY = 0) {
-  const alignedX = snapToTextGrid(x);
-  const alignedY = snapToTextGrid(y);
-
-  if (!canPlaceParticle(alignedX, alignedY)) return;
+function spawnParticle(x, y, now) {
+  if (!canPlaceParticle(x, y)) return;
 
   const particle = document.createElement('span');
   particle.className = 'trail-particle';
   particle.textContent = trailChars[Math.floor(Math.random() * trailChars.length)];
-  particle.style.left = `${alignedX}px`;
-  particle.style.top = `${alignedY}px`;
-  particle.style.setProperty('--drift-x', `${driftX}px`);
-  particle.style.setProperty('--drift-y', `${driftY}px`);
+  particle.style.left = `${x}px`;
+  particle.style.top = `${y}px`;
   trailLayer.appendChild(particle);
 
-  activeParticleAnchors.push({ x: alignedX, y: alignedY, time: now });
+  activeParticleAnchors.push({ x, y, time: now });
   setTimeout(() => {
     particle.remove();
-  }, 1250);
+  }, 700);
 }
 
 window.addEventListener('pointermove', (event) => {
@@ -238,24 +228,15 @@ window.addEventListener('pointermove', (event) => {
   const dx = event.clientX - lastPointerX;
   const dy = event.clientY - lastPointerY;
   const magnitude = Math.hypot(dx, dy) || 1;
-  const travelX = dx / magnitude;
-  const travelY = dy / magnitude;
   const normalX = -dy / magnitude;
   const normalY = dx / magnitude;
 
-  const offsets = [
-    -trailWidth / 2,
-    -trailWidth / 4,
-    0,
-    trailWidth / 4,
-    trailWidth / 2
-  ];
+  const offsets = [-trailWidth / 2, 0, trailWidth / 2];
   offsets.forEach((offset) => {
-    const spawnX = event.clientX + (normalX * offset);
-    const spawnY = event.clientY + (normalY * offset);
-    const driftX = -travelX * (14 + Math.abs(offset) * 0.2);
-    const driftY = -travelY * (14 + Math.abs(offset) * 0.2);
-    spawnParticle(spawnX, spawnY, now, driftX, driftY);
+    const jitter = (Math.random() - 0.5) * 4;
+    const spawnX = event.clientX + (normalX * offset) + jitter;
+    const spawnY = event.clientY + (normalY * offset) + jitter;
+    spawnParticle(spawnX, spawnY, now);
   });
 
   lastPointerX = event.clientX;
