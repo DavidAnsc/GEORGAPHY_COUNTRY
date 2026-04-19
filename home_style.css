@@ -395,8 +395,7 @@ body {
     line-height: 1;
     color: rgba(240, 248, 255, 0.9);
     text-shadow: 0 0 12px rgba(65, 105, 225, 0.5);
-    transform: translate(-50%, -50%) scaleX(1) scaleY(1);
-    transform-origin: center;
+    transform: translate(-50%, -50%) scale(1);
     opacity: 1;
     animation: trailFade 1200ms ease-out forwards;
 }
