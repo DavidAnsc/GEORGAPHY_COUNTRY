@@ -389,7 +389,7 @@ body {
 
 .trail-particle {
     position: fixed;
-    font-family: "Space Grotesk", monospace;
+    font-family: "Courier New", monospace;
     font-weight: 700;
     font-size: 8px;
     line-height: 1;
