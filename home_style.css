@@ -391,21 +391,26 @@ body {
     position: fixed;
     font-family: "Space Grotesk", monospace;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 24px;
+    line-height: 1;
     color: rgba(240, 248, 255, 0.9);
-    text-shadow: 0 0 10px rgba(65, 105, 225, 0.45);
-    transform: translate(-50%, -50%) scale(1);
+    text-shadow: 0 0 12px rgba(65, 105, 225, 0.5);
+    transform: translate(-50%, -50%) scaleX(1) scaleY(1);
+    transform-origin: center;
     opacity: 1;
-    animation: trailFade 700ms ease-out forwards;
+    animation: trailFade 1200ms ease-out forwards;
 }
 
 @keyframes trailFade {
     0% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        transform: translate(-50%, -50%) scaleX(1) scaleY(1);
     }
     100% {
         opacity: 0;
-        transform: translate(-50%, -58%) scale(0.75) rotate(8deg);
+        transform: translate(
+            calc(-50% + var(--drift-x, 0px)),
+            calc(-50% + var(--drift-y, 0px))
+        ) scaleX(0.2) scaleY(0.45);
     }
 }

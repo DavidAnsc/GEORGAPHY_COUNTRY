@@ -164,7 +164,13 @@ trailLayer.className = 'pointer-trail-layer';
 document.body.appendChild(trailLayer);
 
 let lastTrailTime = 0;
-const trailIntervalMs = 26;
+const trailIntervalMs = 18;
+const trailWidth = 24;
+const minParticleDistance = 18;
+const textGrid = 12;
+const activeParticleAnchors = [];
+let lastPointerX = null;
+let lastPointerY = null;
 
 function isInHomeTopSection(clientY) {
   if (!slider) return false;
@@ -172,25 +178,80 @@ function isInHomeTopSection(clientY) {
   return clientY < sliderTop;
 }
 
+function removeExpiredAnchors(now) {
+  for (let i = activeParticleAnchors.length - 1; i >= 0; i -= 1) {
+    if (now - activeParticleAnchors[i].time > 360) {
+      activeParticleAnchors.splice(i, 1);
+    }
+  }
+}
+
+function canPlaceParticle(x, y) {
+  const minDistanceSq = minParticleDistance * minParticleDistance;
+  return activeParticleAnchors.every((anchor) => {
+    const dx = anchor.x - x;
+    const dy = anchor.y - y;
+    return (dx * dx) + (dy * dy) > minDistanceSq;
+  });
+}
+
+function snapToTextGrid(value) {
+  return Math.round(value / textGrid) * textGrid;
+}
+
+function spawnParticle(x, y, now, driftX = 0, driftY = 0) {
+  const alignedX = snapToTextGrid(x);
+  const alignedY = snapToTextGrid(y);
+
+  if (!canPlaceParticle(alignedX, alignedY)) return;
+
+  const particle = document.createElement('span');
+  particle.className = 'trail-particle';
+  particle.textContent = trailChars[Math.floor(Math.random() * trailChars.length)];
+  particle.style.left = `${alignedX}px`;
+  particle.style.top = `${alignedY}px`;
+  particle.style.setProperty('--drift-x', `${driftX}px`);
+  particle.style.setProperty('--drift-y', `${driftY}px`);
+  trailLayer.appendChild(particle);
+
+  activeParticleAnchors.push({ x: alignedX, y: alignedY, time: now });
+  setTimeout(() => {
+    particle.remove();
+  }, 1250);
+}
+
 window.addEventListener('pointermove', (event) => {
   const now = performance.now();
   if (now - lastTrailTime < trailIntervalMs) return;
   if (!isInHomeTopSection(event.clientY)) return;
 
+  removeExpiredAnchors(now);
   lastTrailTime = now;
 
-  const particle = document.createElement('span');
-  particle.className = 'trail-particle';
-  particle.textContent = trailChars[Math.floor(Math.random() * trailChars.length)];
+  if (lastPointerX === null || lastPointerY === null) {
+    lastPointerX = event.clientX;
+    lastPointerY = event.clientY;
+    spawnParticle(event.clientX, event.clientY, now);
+    return;
+  }
 
-  const jitterX = (Math.random() - 0.5) * 10;
-  const jitterY = (Math.random() - 0.5) * 10;
-  particle.style.left = `${event.clientX + jitterX}px`;
-  particle.style.top = `${event.clientY + jitterY}px`;
+  const dx = event.clientX - lastPointerX;
+  const dy = event.clientY - lastPointerY;
+  const magnitude = Math.hypot(dx, dy) || 1;
+  const travelX = dx / magnitude;
+  const travelY = dy / magnitude;
+  const normalX = -dy / magnitude;
+  const normalY = dx / magnitude;
 
-  trailLayer.appendChild(particle);
+  const offsets = [-trailWidth / 2, 0, trailWidth / 2];
+  offsets.forEach((offset) => {
+    const spawnX = event.clientX + (normalX * offset);
+    const spawnY = event.clientY + (normalY * offset);
+    const driftX = -travelX * (14 + Math.abs(offset) * 0.2);
+    const driftY = -travelY * (14 + Math.abs(offset) * 0.2);
+    spawnParticle(spawnX, spawnY, now, driftX, driftY);
+  });
 
-  setTimeout(() => {
-    particle.remove();
-  }, 750);
+  lastPointerX = event.clientX;
+  lastPointerY = event.clientY;
 });
