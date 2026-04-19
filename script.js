@@ -158,18 +158,24 @@ exploreTechButton.onmouseout = function() {
 }
 
 // Pointer character trail for top section of homepage
-const trailChars = ['>', '_', '<'];
 const trailLayer = document.createElement('div');
 trailLayer.className = 'pointer-trail-layer';
 document.body.appendChild(trailLayer);
 
 let lastTrailTime = 0;
-const trailIntervalMs = 18;
-const trailWidth = 24;
-const minParticleDistance = 18;
+const trailIntervalMs = 28;
+const minParticleDistance = 14;
 const activeParticleAnchors = [];
 let lastPointerX = null;
 let lastPointerY = null;
+const dropletRows = [
+  '   _   ',
+  '  <●>  ',
+  ' <●●●> ',
+  '  |●|  ',
+  '   |   ',
+  '   |   '
+];
 
 function isInHomeTopSection(clientY) {
   if (!slider) return false;
@@ -194,14 +200,15 @@ function canPlaceParticle(x, y) {
   });
 }
 
-function spawnParticle(x, y, now) {
+function spawnParticle(x, y, now, angleDeg = 0) {
   if (!canPlaceParticle(x, y)) return;
 
-  const particle = document.createElement('span');
+  const particle = document.createElement('pre');
   particle.className = 'trail-particle';
-  particle.textContent = trailChars[Math.floor(Math.random() * trailChars.length)];
+  particle.textContent = dropletRows.join('\n');
   particle.style.left = `${x}px`;
   particle.style.top = `${y}px`;
+  particle.style.setProperty('--trail-angle', `${angleDeg}deg`);
   trailLayer.appendChild(particle);
 
   activeParticleAnchors.push({ x, y, time: now });
@@ -221,23 +228,20 @@ window.addEventListener('pointermove', (event) => {
   if (lastPointerX === null || lastPointerY === null) {
     lastPointerX = event.clientX;
     lastPointerY = event.clientY;
-    spawnParticle(event.clientX, event.clientY, now);
+    spawnParticle(event.clientX, event.clientY, now, 0);
     return;
   }
 
   const dx = event.clientX - lastPointerX;
   const dy = event.clientY - lastPointerY;
   const magnitude = Math.hypot(dx, dy) || 1;
-  const normalX = -dy / magnitude;
-  const normalY = dx / magnitude;
-
-  const offsets = [-trailWidth / 2, 0, trailWidth / 2];
-  offsets.forEach((offset) => {
-    const jitter = (Math.random() - 0.5) * 4;
-    const spawnX = event.clientX + (normalX * offset) + jitter;
-    const spawnY = event.clientY + (normalY * offset) + jitter;
-    spawnParticle(spawnX, spawnY, now);
-  });
+  const unitX = dx / magnitude;
+  const unitY = dy / magnitude;
+  const cursorBodyOffset = -3;
+  const spawnX = event.clientX + (unitX * cursorBodyOffset);
+  const spawnY = event.clientY + (unitY * cursorBodyOffset);
+  const angleDeg = (Math.atan2(dy, dx) * 180 / Math.PI) + 90;
+  spawnParticle(spawnX, spawnY, now, angleDeg);
 
   lastPointerX = event.clientX;
   lastPointerY = event.clientY;
