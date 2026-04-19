@@ -163,7 +163,7 @@ trailLayer.className = 'pointer-trail-layer';
 document.body.appendChild(trailLayer);
 
 let lastTrailTime = 0;
-const trailIntervalMs = 128;
+const trailIntervalMs = 28;
 const minParticleDistance = 14;
 const activeParticleAnchors = [];
 let lastPointerX = null;
@@ -203,14 +203,9 @@ function canPlaceParticle(x, y) {
 function spawnParticle(x, y, now, angleDeg = 0) {
   if (!canPlaceParticle(x, y)) return;
 
-  const particle = document.createElement('div');
+  const particle = document.createElement('pre');
   particle.className = 'trail-particle';
-  dropletRows.forEach((row) => {
-    const rowNode = document.createElement('span');
-    rowNode.className = 'trail-particle-row';
-    rowNode.textContent = row;
-    particle.appendChild(rowNode);
-  });
+  particle.textContent = dropletRows.join('\n');
   particle.style.left = `${x}px`;
   particle.style.top = `${y}px`;
   particle.style.setProperty('--trail-angle', `${angleDeg}deg`);

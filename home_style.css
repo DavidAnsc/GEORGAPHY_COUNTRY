@@ -391,10 +391,10 @@ body {
     position: fixed;
     font-family: "Courier New", monospace;
     font-weight: 700;
-    font-size: 9px;
+    font-size: 8px;
     line-height: 1;
     letter-spacing: 0;
-    white-space: normal;
+    white-space: pre;
     margin: 0;
     color: rgba(240, 248, 255, 0.95);
     text-shadow: none;
@@ -402,11 +402,6 @@ body {
     transform-origin: 50% 50%;
     opacity: 1;
     animation: trailFade 700ms linear forwards;
-}
-
-.trail-particle-row {
-    display: block;
-    white-space: pre;
 }
 
 @keyframes trailFade {
